@@ -1,0 +1,51 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+    colors = true
+    interval = 1
+    color_good = "#9ece6a"
+    color_bad = "#f7768e"
+    color_degraded = "#e0af68"
+}
+
+order += "disk /"
+order += "disk /data"
+order += "memory"
+order += "load"
+order += "ethernet eno1"
+order += "tztime local"
+
+ethernet eno1 {
+    format_up = "󰈀 %ip"
+    format_down = "󰈀 down"
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+}
+
+disk "/" {
+    format = "󰋊 R. %avail"
+}
+
+disk "/data" {
+    format = "󰋊 D. %avail"
+}
+
+load {
+    format = "󰓅 %1min"
+}
+
+memory {
+    format = "󰍛 %used"
+}
+
+tztime local {
+        format = "󰥔 %d-%m-%Y %H:%M:%S"
+}
