@@ -225,22 +225,14 @@ vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {
 	desc = "Rename symbol",
 })
 
-vim.keymap.set("n", "[d", function()
-    vim.diagnostic.jump({
-        count = -1,
-        float = true,
+vim.keymap.set("n", "<leader>cf", function()
+    require("conform").format({
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 500,
     })
 end, {
-    desc = "Previous diagnostic",
-})
-
-vim.keymap.set("n", "]d", function()
-    vim.diagnostic.jump({
-        count = 1,
-        float = true,
-    })
-end, {
-    desc = "Next diagnostic",
+    desc = "Format file",
 })
 
 -- =========================================================
