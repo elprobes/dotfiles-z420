@@ -3,13 +3,17 @@ opacity = 1.0
 padding = { x = 10, y = 10 }
 
 [font]
-size = 12
+size = 13
 
 [font.normal]
+#family = "Hack Nerd Font Mono"
 family = "UbuntuMono Nerd Font Mono"
 
+[mouse]
+hide_when_typing = true
+
 [colors.primary]
-background = "#192330"
+background = "#121923"
 foreground = "#cdcecf"
 
 [colors.normal]
