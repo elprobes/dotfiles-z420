@@ -18,4 +18,4 @@ jobs:
 
     source: /srv/containers
 
-    destination: /backup/srv-containers
+    destination: /tmp/bk-test

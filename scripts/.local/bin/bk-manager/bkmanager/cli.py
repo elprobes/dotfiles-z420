@@ -5,7 +5,8 @@ from bkmanager.config import (
         load_group_by_id
 )
 from bkmanager.backup import (
-        dry_run_group
+        dry_run_group,
+        run_group
 )
 
 def cmd_list():
@@ -117,7 +118,9 @@ def main():
         if args.dry_run:
 
             dry_run_group(group)
+            return
 
+        run_group(group)
         return
 
     parser.print_help()

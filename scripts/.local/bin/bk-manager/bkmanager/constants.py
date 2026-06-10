@@ -1,21 +1,36 @@
 from pathlib import Path
 
-CONFIG_DIR = Path.home() / ".config" / "bk-manager"
+HOME = Path.home()
 
-GROUPS_DIR = CONFIG_DIR / "groups"
+CONFIG_DIR = (
+    HOME
+    / ".config"
+    / "bk-manager"
+)
+
+GROUPS_DIR = (
+    CONFIG_DIR
+    / "groups"
+)
 
 STATE_DIR = (
-    Path.home()
+    HOME
     / ".local"
     / "state"
     / "bk-manager"
 )
 
-STATE_DIR.mkdir(
-    parents=True,
-    exist_ok=True
+STATE_GROUPS_DIR = (
+    STATE_DIR
+    / "groups"
 )
 
-STATE_GROUPS_DIR = STATE_DIR / "groups"
+LOG_DIR = (
+    STATE_DIR
+    / "logs"
+)
 
-LOG_DIR = STATE_DIR / "logs"
+RSYNC_ARGS = [
+    "-aHAX",
+    "--delete",
+]

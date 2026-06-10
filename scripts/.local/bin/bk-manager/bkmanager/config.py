@@ -2,17 +2,11 @@ from pathlib import Path
 
 import yaml
 
+from bkmanager.constants import GROUPS_DIR
 from bkmanager.models import (
         Group,
         Job,
         Schedule,
-)
-
-GROUPS_DIR = (
-    Path.home()
-    / ".config"
-    / "bk-manager"
-    / "groups"
 )
 
 

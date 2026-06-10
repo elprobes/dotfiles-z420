@@ -8,6 +8,12 @@ class Job:
     source: str
     destination: str
 
+    def __str__(self):
+        return (
+            f"{self.id}: "
+            f"{self.source} -> "
+            f"{self.id}:"
+        )
 
 @dataclass
 class Schedule:
