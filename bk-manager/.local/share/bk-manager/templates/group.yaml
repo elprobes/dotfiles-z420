@@ -1,0 +1,17 @@
+version: 1
+
+group:
+
+  name: new-group
+
+  enabled: true
+
+  description: ""
+
+  schedule:
+
+    type: daily
+
+    time: "03:00"
+
+  jobs: []

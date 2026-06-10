@@ -1,0 +1,10 @@
+version: 1
+
+logging:
+  retention_days: 30
+
+notifications:
+  enabled: true
+
+scheduler:
+  check_interval_minutes: 5

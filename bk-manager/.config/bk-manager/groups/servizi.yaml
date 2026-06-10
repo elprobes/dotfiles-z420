@@ -1,0 +1,21 @@
+version: 1
+
+id: servizi
+
+enabled: true
+
+description: Backup servizi
+
+schedule:
+  type: daily
+  time: "03:00"
+
+jobs:
+
+  - id: containers
+
+    enabled: true
+
+    source: /srv/containers
+
+    destination: /backup/srv-containers
