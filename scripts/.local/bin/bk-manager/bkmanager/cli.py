@@ -4,6 +4,9 @@ from bkmanager.config import (
         load_groups,
         load_group_by_id
 )
+from bkmanager.backup import (
+        dry_run_group
+)
 
 def cmd_list():
 
@@ -82,6 +85,19 @@ def main():
         "group"
     )
 
+    run_parser = subparsers.add_parser(
+    "run"
+)
+
+    run_parser.add_argument(
+        "group"
+    )
+
+    run_parser.add_argument(
+        "--dry-run",
+        action="store_true"
+    )
+
     args = parser.parse_args()
 
     if args.command == "list":
@@ -90,6 +106,18 @@ def main():
 
     if args.command == "show":
         cmd_show(args.group)
+        return
+
+    if args.command == "run":
+
+        group = load_group_by_id(
+            args.group
+        )
+
+        if args.dry_run:
+
+            dry_run_group(group)
+
         return
 
     parser.print_help()
