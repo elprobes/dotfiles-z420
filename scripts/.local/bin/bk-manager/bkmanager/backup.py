@@ -8,6 +8,12 @@ from bkmanager.logger import (
         log_info,
         log_error
 )
+from bkmanager.scheduler import (
+        should_run
+)
+from bkmanager.state import (
+        load_group_state
+)
 
 
 def dry_run_group(group: Group):
@@ -113,6 +119,29 @@ def run_all_groups():
     for group in groups:
 
         if not group.enabled:
+            continue
+
+        run_group(group)
+
+def run_scheduled_groups():
+
+    groups = load_groups()
+
+    for group in groups:
+
+        state = load_group_state(
+            group.id
+        )
+
+        if not should_run(
+            group,
+            state
+        ):
+
+            log_info(
+                    f"Skipping {group.id}: already executed today"
+            )
+
             continue
 
         run_group(group)

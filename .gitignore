@@ -49,6 +49,7 @@ bkmanager/.local/state/
 # Temporary files
 # -------------------------------------------------------------------
 
+tests/tmp/
 *.tmp
 *.bak
 *.swp

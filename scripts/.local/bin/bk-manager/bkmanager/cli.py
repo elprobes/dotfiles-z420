@@ -8,11 +8,15 @@ from bkmanager.config import (
 from bkmanager.backup import (
         dry_run_group,
         run_group,
-        run_all_groups
+        run_all_groups,
+        run_scheduled_groups
 )
 from bkmanager.state import (
         ensure_state_dirs,
         load_group_state
+)
+from bkmanager.logger import (
+        read_today_logs
 )
 
 
@@ -126,6 +130,15 @@ def cmd_status():
             f"{last_run}"
         )
 
+def cmd_logs():
+
+    for line in read_today_logs():
+
+        print(
+            line,
+            end=""
+        )
+
 def main():
 
     ensure_state_dirs()
@@ -140,6 +153,7 @@ def main():
 
     subparsers.add_parser("list")
     subparsers.add_parser("status")
+    subparsers.add_parser("logs")
 
     show_parser = subparsers.add_parser(
         "show"
@@ -164,6 +178,11 @@ def main():
     )
 
     run_parser.add_argument(
+        "--scheduled",
+        action="store_true"
+    )
+
+    run_parser.add_argument(
         "--dry-run",
         action="store_true"
     )
@@ -183,11 +202,19 @@ def main():
         cmd_status()
         return
 
+    if args.command == "logs":
+        cmd_logs()
+        return
+
     if args.command == "run":
 
         if args.all:
 
             run_all_groups()
+            return
+
+        if args.scheduled:
+            run_scheduled_groups()
             return
 
         if not args.group:

@@ -10,10 +10,7 @@ def _log(
 
     now = datetime.now()
 
-    logfile = (
-        LOGS_DIR
-        / f"{now.strftime('%Y-%m-%d')}.log"
-    )
+    logfile = get_today_logfile()
 
     line = (
         f"{now.strftime('%Y-%m-%d %H:%M:%S.%f')} "
@@ -41,3 +38,23 @@ def log_error(
         "ERROR",
         message
     )
+
+def get_today_logfile():
+
+    now = datetime.now()
+
+    return (
+            LOGS_DIR
+            / f"{now.strftime('%Y-%m-%d')}.log"
+    )
+
+def read_today_logs():
+
+    logfile = get_today_logfile()
+
+    if not logfile.exists():
+        return []
+
+    with open(logfile, "r") as f:
+
+        return f.readlines()
