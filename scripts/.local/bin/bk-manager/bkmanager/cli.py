@@ -11,6 +11,9 @@ from bkmanager.backup import (
         run_all_groups,
         run_scheduled_groups
 )
+from bkmanager.lock import (
+        acquire_lock
+)
 from bkmanager.state import (
         ensure_state_dirs,
         load_group_state
@@ -164,8 +167,8 @@ def main():
     )
 
     run_parser = subparsers.add_parser(
-    "run"
-)
+        "run"
+    )
 
     run_parser.add_argument(
         "group",
@@ -207,6 +210,23 @@ def main():
         return
 
     if args.command == "run":
+
+        lock_file = acquire_lock()
+
+        if lock_file is None:
+            log_info(
+                "Execution skipped: another instance is running"
+            )
+
+            print(
+                "Another bk-manager "
+                "instance is already running"
+            )
+            return
+
+        log_info(
+            "Acquired execution lock"
+        )
 
         if args.all:
 
