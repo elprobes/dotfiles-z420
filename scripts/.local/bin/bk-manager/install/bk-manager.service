@@ -1,6 +1,0 @@
-[Unit]
-Description=BK Manager Scheduler
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/bk-manager run --scheduled
