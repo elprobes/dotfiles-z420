@@ -8,6 +8,8 @@ from bkmanager.backup import (
         dry_run_group,
         run_group
 )
+from bkmanager.state import ensure_state_dirs
+
 
 def cmd_list():
 
@@ -68,6 +70,8 @@ def cmd_show(group_id: str):
 
 def main():
 
+    ensure_state_dirs()
+
     parser = argparse.ArgumentParser(
         prog="bk-manager"
     )
@@ -100,6 +104,7 @@ def main():
     )
 
     args = parser.parse_args()
+
 
     if args.command == "list":
         cmd_list()

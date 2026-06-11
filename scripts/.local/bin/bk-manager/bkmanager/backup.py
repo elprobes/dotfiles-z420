@@ -2,6 +2,7 @@ import subprocess
 
 from bkmanager.constants import RSYNC_ARGS
 from bkmanager.models import Group
+from bkmanager.state import save_group_state
 
 
 def dry_run_group(group: Group):
@@ -57,9 +58,25 @@ def run_group(group):
     print(f"Running group: {group.id}")
     print()
 
-    for job in group.jobs:
+    try:
 
-        if not job.enabled:
-            continue
+        for job in group.jobs:
 
-        run_job(job)
+            if not job.enabled:
+                continue
+
+            run_job(job)
+
+        save_group_state(
+            group.id,
+            "success"
+        )
+
+    except Exception:
+
+        save_group_state(
+            group.id,
+            "failed"
+        )
+
+        raise
