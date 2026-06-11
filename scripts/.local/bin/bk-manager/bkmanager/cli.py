@@ -7,7 +7,8 @@ from bkmanager.config import (
 )
 from bkmanager.backup import (
         dry_run_group,
-        run_group
+        run_group,
+        run_all_groups
 )
 from bkmanager.state import (
         ensure_state_dirs,
@@ -153,7 +154,13 @@ def main():
 )
 
     run_parser.add_argument(
-        "group"
+        "group",
+        nargs="?"
+    )
+
+    run_parser.add_argument(
+        "--all",
+        action="store_true"
     )
 
     run_parser.add_argument(
@@ -177,6 +184,19 @@ def main():
         return
 
     if args.command == "run":
+
+        if args.all:
+
+            run_all_groups()
+            return
+
+        if not args.group:
+
+            print(
+                "Specify a group "
+                "or use --all"
+            )
+            return
 
         group = load_group_by_id(
             args.group

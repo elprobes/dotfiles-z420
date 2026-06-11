@@ -45,7 +45,7 @@ STATE_GROUPS_DIR = (
     / "groups"
 )
 
-LOG_DIR = (
+LOGS_DIR = (
     STATE_DIR
     / "logs"
 )

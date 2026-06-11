@@ -3,6 +3,11 @@ import subprocess
 from bkmanager.constants import RSYNC_ARGS
 from bkmanager.models import Group
 from bkmanager.state import save_group_state
+from bkmanager.config import load_groups
+from bkmanager.logger import (
+        log_info,
+        log_error
+)
 
 
 def dry_run_group(group: Group):
@@ -47,12 +52,24 @@ def run_job(job):
         f"{job.destination}/",
     ]
 
+    log_info(
+        f"Job {job.id} started"
+    )
+
     subprocess.run(
         cmd,
         check=True
     )
 
+    log_info(
+        f"Job {job.id} completed"
+    )
+
 def run_group(group):
+
+    log_info(
+        f"Group {group.id} started"
+    )
 
     print()
     print(f"Running group: {group.id}")
@@ -72,7 +89,15 @@ def run_group(group):
             "success"
         )
 
-    except Exception:
+        log_info(
+           f"Group {group.id} completed"
+        )
+
+    except Exception as e:
+
+        log_error(
+            f"Group {group.id} failed: {e}"
+        )
 
         save_group_state(
             group.id,
@@ -80,3 +105,14 @@ def run_group(group):
         )
 
         raise
+
+def run_all_groups():
+
+    groups = load_groups()
+
+    for group in groups:
+
+        if not group.enabled:
+            continue
+
+        run_group(group)
