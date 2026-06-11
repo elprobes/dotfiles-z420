@@ -87,7 +87,7 @@ def cmd_status():
 
     print(
         f"{'GROUP':<15}"
-        f"{'RESULT':<12}"
+        f"{'STATUS':<12}"
         f"{'LAST RUN'}"
     )
 
@@ -101,7 +101,7 @@ def cmd_status():
 
         if state is None:
 
-            result = "never"
+            status = "• never"
             last_run = "-"
 
         else:
@@ -110,6 +110,22 @@ def cmd_status():
                 "last_result",
                 "-"
             )
+
+            if result == "success":
+
+                status = "✓ success"
+
+            elif result == "failed":
+
+                status = "✗ failed"
+
+            elif result == "never":
+
+                status = "• never"
+
+            else:
+
+                status = result
 
             last_run = state.get(
                 "last_run"
@@ -129,7 +145,7 @@ def cmd_status():
 
         print(
             f"{group.id:<15}"
-            f"{result:<12}"
+            f"{status:<12}"
             f"{last_run}"
         )
 
