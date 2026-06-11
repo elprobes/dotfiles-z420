@@ -19,3 +19,5 @@ jobs:
     source: /srv/containers
 
     destination: /data/roberto/z420/containers
+
+    retention: 2
