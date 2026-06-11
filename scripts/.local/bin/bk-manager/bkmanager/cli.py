@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime
 
 from bkmanager.config import (
         load_groups,
@@ -8,7 +9,10 @@ from bkmanager.backup import (
         dry_run_group,
         run_group
 )
-from bkmanager.state import ensure_state_dirs
+from bkmanager.state import (
+        ensure_state_dirs,
+        load_group_state
+)
 
 
 def cmd_list():
@@ -67,6 +71,59 @@ def cmd_show(group_id: str):
 
         print()
 
+def cmd_status():
+
+    groups = load_groups()
+
+    print()
+
+    print(
+        f"{'GROUP':<15}"
+        f"{'RESULT':<12}"
+        f"{'LAST RUN'}"
+    )
+
+    print()
+
+    for group in groups:
+
+        state = load_group_state(
+            group.id
+        )
+
+        if state is None:
+
+            result = "never"
+            last_run = "-"
+
+        else:
+
+            result = state.get(
+                "last_result",
+                "-"
+            )
+
+            last_run = state.get(
+                "last_run"
+            )
+
+            if last_run:
+
+                last_run = (
+                    datetime
+                    .fromisoformat(last_run)
+                    .strftime("%Y-%m-%d %H:%M")
+                )
+
+            else:
+
+                last_run = "-"
+
+        print(
+            f"{group.id:<15}"
+            f"{result:<12}"
+            f"{last_run}"
+        )
 
 def main():
 
@@ -81,6 +138,7 @@ def main():
     )
 
     subparsers.add_parser("list")
+    subparsers.add_parser("status")
 
     show_parser = subparsers.add_parser(
         "show"
@@ -112,6 +170,10 @@ def main():
 
     if args.command == "show":
         cmd_show(args.group)
+        return
+
+    if args.command == "status":
+        cmd_status()
         return
 
     if args.command == "run":

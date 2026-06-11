@@ -18,6 +18,20 @@ def ensure_state_dirs():
             exist_ok=True
     )
 
+def load_group_state(
+    group_id: str
+):
+    path = (
+        STATE_GROUPS_DIR
+        / f"{group_id}.json"
+    )
+
+    if not path.exists():
+        return None
+
+    with open(path, "r") as f:
+        return json.load(f)
+
 def save_group_state(
     group_id: str,
     result: str
