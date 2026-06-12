@@ -28,8 +28,6 @@ ta () {
     fi
 }
 
-alias git-publish='git push origin main && git push github main'
-
 HISTSIZE=10000
 HISTFILESIZE=10000
 
